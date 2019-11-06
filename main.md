@@ -111,6 +111,8 @@ bool is_blank(const std::string& line) {
 
 .
 
+Rust 
+
 <img width="200px" src="img/rustacean-flat-happy.svg" />
 
 ```rs
@@ -126,6 +128,8 @@ fn is_blank(s: &str) -> bool {
 .
 
 ### Memory safety
+
+C and C++
 
 <ul>
 <li>use after free</li>
@@ -192,17 +196,10 @@ fn mandelbrot() -> Vec<u32> {
 
 - Powerful type system
 - Official package manager: **Cargo**
-- Public registry: <crates.io>
+- Public registry: [crates.io](https://crates.io)
 - Stability concerns.
    - Edition mechanism (Rust 2018)
    - No Rust 2.0
-
-.
-
-### Use cases
-
-
-
 
 .
 
