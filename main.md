@@ -77,6 +77,8 @@ def is_blank(s):
 
 <span class="fragment" data-fragment-index="2">Real time (wall clock): 2.05 s</span>
 
+<span class="fragment" data-fragment-index="2">👎</span>
+
 .
 
 #### Or maybe you like C++?
@@ -96,15 +98,17 @@ bool is_blank(const std::string& line) {
 }
 ```
 
-- Faster: 0.80 s
-- Without string checking (`utf8::is_valid`): 0.26s
-- But more unwieldy: more lines, uses 3rd party lib
+<span class="fragment" data-fragment-index="0">Faster: 0.80 s</span>
+
+<span class="fragment" data-fragment-index="1">Without string checking (<code>utf8::is_valid</code>): 0.26 s</span>
+
+<span class="fragment" data-fragment-index="2">But more unwieldy: more lines, uses 3rd party lib</span>
+
+<span class="fragment" data-fragment-index="2">🙍</span>
 
 .
 
-#### Rust
-
-<img width="200px" src="img/rustacean-flat-happy.svg" />
+#### With Rust...
 
 ```rs
 fn is_blank(s: &str) -> bool {
@@ -112,9 +116,13 @@ fn is_blank(s: &str) -> bool {
 }
 ```
 
-- Nice one-liner
-- Very fast! (0.46s)
-- UTF-8 checked, safe to use
+Nice one-liner
+
+Fast (0.46s)
+
+UTF-8 checked, safe to use
+
+<img width="200px" src="img/rustacean-flat-happy.svg" />
 
 Note: If you'd like the original source codes of this microbenchmark, please let me know.
 
@@ -335,8 +343,8 @@ submit_transfer_syntax! {
 ### WebAssembly ready! 🎉
 
 - No bindings to native libraries
-- It's already being used on web projects.
-- Integration to CI is under review.
+- It's already being used on web projects
+- Wasm testing in CI may happen eventually
 
 .
 
@@ -350,14 +358,6 @@ submit_transfer_syntax! {
 </ul>
 
 <img class="fragment" data-fragment-index="0" src="img/dicom-rs-roadmap.png" width="80%"/>
-
-The future:
-
-- Lazy loading
-- Pixel data abstraction
-- Network protocols
-- ... PACS archive?
-
 
 ---
 
