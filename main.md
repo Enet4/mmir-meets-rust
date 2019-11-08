@@ -1,43 +1,29 @@
 # Medical Imaging Informatics meets Rust
 
-## An introduction to the Rust programming language and the DICOM-rs project
+> An introduction to the Rust programming language and the DICOM-rs project
 
 <div style="font-size: 24pt; text-align: left; margin-top: 96px; margin-bottom: 24px;">Eduardo Pinho</div>
 <br>
 
-<div style="font-size: 12pt; text-align: right; margin: 1cm;">9th November 2019</div>
-<div class="foot" style="margin-left: 0pt; margin-right: 0pt; margin-bottom: 0pt; background-color: white;">
-</div>
-
----
-
-## Table of Contents
-
-<br/>
-
-1. The Rust programming language
-2. DICOM-rs project
+<div style="font-size: 14pt; text-align: right; margin: 0.5cm;">8th November 2019</div>
 
 ---
 
 ## Medical Imaging Informatics
 
-<!-- 
-Digital medical imaging in healthcare institutions plays a valuable role in medical diagnosis, decision support, and treatment procedures. As the requirements and expectations of these systems increase, so do the concerns for fast, safe, and usable tools for the retrieval and manipulation of medical imaging data.
--->
 
 <div class="container">
 <ul>
-  <li>Plays an important role.</li>
-  <li>Evolving quickly.</li>
-  <li>Increasing requirements.</li>
+  <li>Plays an important role</li>
+  <li>Evolving quickly</li>
+  <li>Increasing requirements</li>
   <ul>
     <li>More data, larger studies</li>
     <li>Demands for fast visualization & better decision support</li>
   </ul>
-  <li class="fragment" data-fragment-index="0">Dependent on the DICOM standard.</li>
+  <li class="fragment" data-fragment-index="0">Dependent on the DICOM standard</li>
   <ul>
-    <li class="fragment" data-fragment-index="0">Value in good implementations.</li>
+    <li class="fragment" data-fragment-index="0">Value in good implementations</li>
     <li class="fragment" data-fragment-index="1"><b>DICOM-rs</b>: an implementation in Rust</li>
   </ul>
 <ul>
@@ -45,24 +31,25 @@ Digital medical imaging in healthcare institutions plays a valuable role in medi
 
 .
 
-# <img src="img/rust-logo-blk.svg" style="display:inline" /> What is Rust?
+# What is Rust?
+
+<img src="img/rust-logo-blk.svg" />
 
 - Multi-paradigm programming language
-- Started by Graydon Hoare, intern at Mozilla.
-  - Later on deferred to specialized teams.
-- 1.0 released in May 2015.
-  - New releases every 6 weeks. (current: 1.38.0)
-  - First major release: Rust 2018 edition 
+- Started by Graydon Hoare, intern at Mozilla
+  - Later on deferred to specialized teams
+- 1.0.0 released in May 2015
+  - New release every 6 weeks (current: 1.39.0)
 
 <img class="fragment" data-fragment-index="0" src="img/fearless-concurrency-with-rust.png" />
 
 .
 
-![](img/triangle.svg)
+<img src="img/triangle.svg" width="75%" />
 
 .
 
-#### Performance
+## Performance
 
 - Compiled (LLVM)
 - Minimal runtime
@@ -77,18 +64,22 @@ let new_services: BTreeMap<_, _> = services.into_iter()
 
 .
 
-So I heard you like Python.
+#### So I heard you like Python.
 
 ```python
 def is_blank(s):
     return not s or s.isspace()
 ```
 
-<span class="fragment" data-fragment-index="0">400MB text file: 2.08s</span>
+<span class="fragment" data-fragment-index="0">Objective: Count blank lines of a file.</span>
+
+<span class="fragment" data-fragment-index="1">400MB text file</span>
+
+<span class="fragment" data-fragment-index="2">Real time (wall clock): 2.05 s</span>
 
 .
 
-Or maybe you like the speed of C++?
+#### Or maybe you like C++?
 
 ```c++
 #include <string>
@@ -105,13 +96,13 @@ bool is_blank(const std::string& line) {
 }
 ```
 
-- Faster: 1.45s
-- Without string checking (`utf8::is_valid`): 0.30s
-- But more unwieldy
+- Faster: 0.80 s
+- Without string checking (`utf8::is_valid`): 0.26s
+- But more unwieldy: more lines, uses 3rd party lib
 
 .
 
-Rust 
+#### Rust
 
 <img width="200px" src="img/rustacean-flat-happy.svg" />
 
@@ -122,14 +113,16 @@ fn is_blank(s: &str) -> bool {
 ```
 
 - Nice one-liner
-- Very fast! (0.45s)
-- UTF-8 checked
+- Very fast! (0.46s)
+- UTF-8 checked, safe to use
+
+Note: If you'd like the original source codes of this microbenchmark, please let me know.
 
 .
 
-### Memory safety
+## Reliability
 
-C and C++
+The risks of C and C++:
 
 <ul>
 <li>use after free</li>
@@ -137,8 +130,10 @@ C and C++
 <li>memory leaks</li>
 <li>buffer overreads</li>
 <li>data races</li>
-<li class="fragment" data-fragment-index="0"> a single breach is dangerous</li>
+<li class="fragment" data-fragment-index="0">A single breach is dangerous</li>
 </ul>
+
+<div class="fragment" data-fragment-index="0">😰</div>
 
 .
 
@@ -146,9 +141,11 @@ C and C++
 
 ~70% of the vulnerabilities Microsoft assigns a CVE each year continue to be memory safety issues
 
+<small><a>https://msrc-blog.microsoft.com/2019/07/16/a-proactive-approach-to-more-secure-code/</a></small>
+
 .
 
-#### Memory safety without garbage collector
+### Memory safety without garbage collector
 
 <div class="container">
 <div class="column column-one">
@@ -159,7 +156,13 @@ C and C++
   <li>Moving, Copying, Borrowing</li>
   <li>Lifetime-aware type system</li>
 </ul>
-<li class="fragment" data-fragment-index="0">Prevent memory conflicts</li>
+<li class="fragment" data-fragment-index="0">No null references</li>
+<ul class="fragment" data-fragment-index="0">
+  <li>Sum types (<code>Option</code>, <code>Result</code>, etc.)</li>
+  <li>Pattern matching</li>
+  <li>Error handling facilities (<code>?</code> operator)</li>
+</ul>
+<li class="fragment" data-fragment-index="1">Prevent memory conflicts</li>
 </div>
 <div class="column column-two">
 <img src="img/rust_ownership_53.gif" />
@@ -174,7 +177,7 @@ C and C++
 
 .
 
-#### Concurrency
+### Concurrency
 
 - Restricted aliasing prevents data races.
 
@@ -188,22 +191,30 @@ fn mandelbrot() -> Vec<u32> {
         .collect()
 }
 ```
+<!-- .element: class="fragment" data-fragment-index="0" --> 
 
 .
 
-
-#### Productivity
+## Productivity
 
 - Powerful type system
-- Official package manager: **Cargo**
-- Public registry: [crates.io](https://crates.io)
-- Stability concerns.
+   - Generics, traits, macros (`derive`)
+- <!-- .element: class="fragment" data-fragment-index="0" -->  Official package manager: <b>Cargo</b> 
+   - Run application: `cargo run`
+   - Run tests: `cargo test`
+- <!-- .element: class="fragment" data-fragment-index="1" --> Public registry: <a href="https://crates.io">crates.io</a>
+   - &gt; 31k crates
+- <!-- .element: class="fragment" data-fragment-index="2" -->  Stability concerns
    - Edition mechanism (Rust 2018)
    - No Rust 2.0
+- <!-- .element: class="fragment" data-fragment-index="3" --> Good community values
+   - Various places and initiatives to help learners.
+
+Note: Rust has a strong history of striving to provide safe spaces. The code of conduct was there from day 1, for example.
 
 .
 
-### Other worthy mentions
+### Who is using Rust?
 
 - Amazon: Firecracker microVM
 - Google: Fuchsia project
@@ -211,16 +222,141 @@ fn mandelbrot() -> Vec<u32> {
 - Mozilla: Firefox Quantum
 - npm: package registry backend
 
+.
 
-In bioinformatics:
+### What Rust gives <b>you</b>
 
-- https://rust-bio.github.io
+<div class="container">
+<div class="column column-one">
+<img src="img/Python-logo-notext.svg" width="50px" /> <img src="img/JavaScript-logo.png" width="50px" />
+
+🤔 
+
+<ul>
+<li>👍 Productivity and tooling <!-- .element: class="fragment" data-fragment-index="0" --> </li>
+<li>💪 Systems programming <!-- .element: class="fragment" data-fragment-index="1" --> </li>
+<li>💪 Boost webapps with WebAssembly <!-- .element: class="fragment" data-fragment-index="1" --> </li> 
+</ul>
+
+</div>
+<div class="column column-two">
+
+<img src="img/cpp_logo.svg" width="50px" />
+
+🤔
+
+<ul>
+<li>👍 Minimal runtime, zero-cost abstractions <!-- .element: class="fragment" data-fragment-index="2" --></li>
+<li>💪 Protection from memory unsafety <!-- .element: class="fragment" data-fragment-index="3" --> </li>
+<li>💪 Standard tooling <!-- .element: class="fragment" data-fragment-index="3" --> </li>
+</ul>
+
+</div>
+</div>
 
 ---
 
 # DICOM-rs
 
+Implementation in pure Rust. <!-- .element: class="fragment" data-fragment-index="0" --> 
+
+- Just giving it a try ...  <!-- .element: class="fragment" data-fragment-index="1" --> 
+   - Became more ambitious.  <!-- .element: class="fragment" data-fragment-index="1" --> 
+- Idiomatic Rust  <!-- .element: class="fragment" data-fragment-index="2" --> 
+- Started in late 2016 (!!) <!-- .element: class="fragment" data-fragment-index="3" --> 
+
 .
+
+```rust
+use dicom::object::open_file;
+
+let obj = open_file("0001.dcm")?;
+// fetch by alias
+let patient_name = obj.element_by_name("PatientName")?.to_str()?;
+let modality = obj.element_by_name("Modality")?.to_str()?;
+// or by tag
+let e = obj.element(Tag(0x0002, 0x0002))?;
+```
+
+.
+
+![](img/dicom-rs.png)
+
+.
+
+## Curiosities
+
+Note: Now here are a few interesting things about the library
+
+.
+
+### Code generation: `dictionary-std`
+
+ 
+<img src="img/dicom-rs-dict-builder.png" width="60%" />
+
+```rust
+//! Automatically generated.
+
+/// CommandGroupLength (0000,0000) UL 1 DICOM
+pub const COMMAND_GROUP_LENGTH: Tag = Tag(0x0000, 0x0000);
+/// AffectedSOPClassUID (0000,0002) UI 1 DICOM
+pub const AFFECTED_SOP_CLASS_UID: Tag = Tag(0x0000, 0x0002);
+/// RequestedSOPClassUID (0000,0003) UI 1 DICOM
+pub const REQUESTED_SOP_CLASS_UID: Tag = Tag(0x0000, 0x0003);
+```
+<!-- .element: class="fragment" data-fragment-index="0" --> 
+
+"dicom-dictionary-std/src/entries.rs" is auto-generated.
+<!-- .element: class="fragment" data-fragment-index="1" --> 
+
+.
+
+### Compile-time plugins
+ 
+- Extend <em>transfer syntax</em> support
+- <code>inventory</code> crate
+
+```rs
+// install private transfer syntax
+submit_transfer_syntax! {
+    TransferSyntax::new(
+        "1.2.840.10008.9999.9999",
+        "Dummy Explicit VR Little Endian",
+        Endianness::Little, // little endian
+        true,               // explicit value representation
+        Codec::Dataset(DummyCodecAdapter),
+    )
+}
+```
+
+.
+
+### WebAssembly ready! 🎉
+
+- No bindings to native libraries
+- It's already being used on web projects.
+- Integration to CI is under review.
+
+.
+
+### Growing the project
+
+<div><img src="img/dicom-crates-io.png" width="32%" /></div>
+
+<ul>
+<li><code>0.1.0</code> released in 1st September 2019</li>
+<li>59 stars on GitHub</li>
+</ul>
+
+<img class="fragment" data-fragment-index="0" src="img/dicom-rs-roadmap.png" width="80%"/>
+
+The future:
+
+- Lazy loading
+- Pixel data abstraction
+- Network protocols
+- ... PACS archive?
 
 
 ---
@@ -233,19 +369,15 @@ In bioinformatics:
 
 .
 
-<h3 style="margin-top: 4cm">Thank you!</h3>
+<h3 style="margin-top: 2cm">Thank you!</h3>
 
-![](https://rustacean.net/more-crabby-things/dancing-ferris.gif)
+<img src="https://rustacean.net/more-crabby-things/dancing-ferris.gif" width="400px"/>
 
-<div style="font-size">
-</div>
-<div class="foot" style="font-size: 18pt; margin-top: 6cm; margin-left: 0pt; margin-right: 0pt; margin-bottom: 0pt;">
-   <a href="https://github.com/Enet4"><img style="vertical-align: bottom" height="46" src="img/github.png" /> Enet4</a>
-   <br>
-   <a href="https://www.twitter.com/E_net4"><img style="vertical-align: bottom" height="46" src="img/twitter.png" />@E_net4</a>
+<div class="foot" style="font-size: 18pt; margin-top: 2.5cm; margin-left: 0pt; margin-right: 0pt; margin-bottom: 0pt;">
+  <a href="https://github.com/Enet4"><img style="vertical-align: bottom" height="46" src="img/github.png" /> Enet4</a>
+  &nbsp;
+  <a href="https://www.twitter.com/E_net4"><img style="vertical-align: bottom" height="46" src="img/twitter.png" />@E_net4</a>
 </div>
 
 Note: This concludes my presentation. You may find me on Twitter or GitHub. Thank you!
-
----
 
