@@ -354,7 +354,7 @@ submit_transfer_syntax! {
 
 <ul>
 <li><code>0.1.0</code> released in 1st September 2019</li>
-<li>59 stars on GitHub</li>
+<li>60+ stars on GitHub</li>
 </ul>
 
 <img class="fragment" data-fragment-index="0" src="img/dicom-rs-roadmap.png" width="80%"/>
