@@ -1,4 +1,4 @@
-## Medical Imaging Meets Rust
+## Medical Imaging Informatics Meets Rust
 
 > An introduction to the Rust programming language and the DICOM-rs project.
 
