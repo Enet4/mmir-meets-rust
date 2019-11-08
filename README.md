@@ -2,7 +2,7 @@
 
 > An introduction to the Rust programming language and the DICOM-rs project.
 
-This is a talk providing some contextualization of the Rust programming language, followed by an introduction to DICOM-rs, a pure Rust implementation of the [DICOM](https://dicomstandard.org) standard. This talk was originally presented for the local UA.PT Bioinformatics lunch meeting. The estimated duration is 30 minutes.
+This is a talk providing some contextualization of the Rust programming language, followed by an introduction to DICOM-rs, a pure Rust implementation of the [DICOM](https://dicomstandard.org) standard. This talk was originally presented for the local UA.PT Bioinformatics lunch meeting. The estimated duration is 20 minutes.
 
 [See the slides here.](https://enet4.github.io/mmi-rust)
 
